@@ -1,0 +1,110 @@
+:root{
+    --primary-color: #0055B8;
+    --secondary-color: #FFB600;
+    --main-font: 'Montserrat', sans-serif;
+    --form-color: rgba(243, 242, 242, 0.87);
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    min-height: 100vh; 
+    margin: 0; 
+    background-color: var(--primary-color); 
+    font-family: var(--main-font);
+
+}
+
+.recovery-form-container {
+    background-color: var(--form-color);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+    max-width: 450px; 
+    width: 90%; 
+    text-align: center; 
+}
+
+.recovery-form-container h2 {
+    margin-bottom: 30px;
+    color: #333;
+    font-weight: 600;
+}
+
+.form-label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 8px;
+    display: block; /* Ensures label is on its own line */
+    text-align: left; /* Aligns label text to the left */
+}
+
+.form-control {
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+}
+
+.btn-primary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: black;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    margin-top: 15px; /* Space above the button */
+    width: 100%; /* Make the button full width */
+}
+
+.btn-primary:hover {
+    background: rgb(196, 144, 0); 
+    transition: .4s ease;
+    border: rgb(196, 144, 0); 
+    color: black;
+}
+
+/* Estilos para validación */
+.form-control.error {
+    border: 2px solid #dc3545;
+}
+
+.form-control.success {
+    border: 2px solid #28a745;
+}
+
+#passwordHelp {
+    color: #dc3545;
+    font-weight: bold;
+    display: none;
+}
+
+#passwordHelp.show {
+    display: block;
+}
+
+/* Estilos para el ojito de contraseña */
+.password-input-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    z-index: 5;
+}
+
+.password-toggle:hover {
+    color: var(--primary-color);
+}
+
+/* Añade espacio para el ojito */
+.form-control {
+    padding-right: 40px !important;
+}

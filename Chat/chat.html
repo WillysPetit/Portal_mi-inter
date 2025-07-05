@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat de Atencion al cliente</title>
+    <link rel="stylesheet" href="styles-chat.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="/imgs/inter-logo-blanco.png" alt="Inter-logo">
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li class="active"><a href="#"><i class="fas fa-comment-dots"></i> Chat en vivo</a></li>
+                    <!-- <li><a href="#"><i class="fas fa-bell"></i> Nuevo</a></li>
+                    <li><a href="#"><i class="fas fa-hourglass-half"></i> Pendiente</a></li>
+                    <li><a href="#"><i class="fas fa-check-circle"></i> Resuelto</a></li> -->
+                </ul>
+            </nav>
+            <!-- <div class="section-title">Atención al cliente</div>
+            <nav class="secondary-nav">
+                <ul>
+                    <li><a href="#"><i class="fas fa-list-alt"></i> Canales</a></li>
+                    <li><a href="#"><i class="fas fa-puzzle-piece"></i> Extensiones</a></li>
+                    <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> Usuarios</a></li>
+                </ul>
+            </nav> -->
+        </div>
+        <div class="main-content">
+            <div class="conversations-list">
+                <div class="conversations-header">
+                    <h2>Conversaciones</h2>
+                </div>
+                <!-- <div class="search-bar">
+                    <input type="text" placeholder="Buscar conversación...">
+                </div> -->
+                <div class="conversation-item active">
+                    <img src="avatar.webp" alt="User Avatar" class="avatar">
+                    <div class="conversation-info">
+                        <span class="name">Lucía Gómez</span>
+                        <span class="status">En linea</span>
+                    </div>
+                </div>
+                <div class="conversation-item">
+                    <img src="avatar.webp" alt="User Avatar" class="avatar">
+                    <div class="conversation-info">
+                        <span class="name">María López</span>
+                        <span class="status">Desconectado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRUEBAS MENSAJES DE CHAT -->
+
+            <div class="chat-area">
+                <div class="chat-messages">
+                    <div class="message outgoing">
+                        <p>hola necesito resolver un problema mi conexión a internet</p>
+                    </div>
+                    <div class="message incoming">
+                        <p>Buenos días, mi nombre es Lucía Gómez. ¿Podrías proporcionarme tu cédula de identidad?</p>
+                    </div>
+                    <div class="message outgoing">
+                        <p>Claro, V-XXXXXXXX</p>
+                    </div>
+                    <div class="message incoming">
+                        <p>Tu reporte se ha generado. N° Reporte: #123456. Gracias por contactarnos!</p>
+                    </div>
+                    <div class="message outgoing">
+                        <p>Muchas gracias</p>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" placeholder="Escribe un mensaje...">
+                    <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script-chat.js"></script>
+</body>
+</html>

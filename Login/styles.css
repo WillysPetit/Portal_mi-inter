@@ -1,0 +1,161 @@
+:root{
+    --primary-color: #0055B8;
+    --secondary-color: #FFB600;
+    --main-font: 'Montserrat', sans-serif;
+    --form-color: rgba(243, 242, 242, 0.87);
+}
+
+.cuerpo {
+    margin: 0;
+    padding: 0;
+    font-family: var(--main-font);
+  }
+
+.background{
+    background-image: url("Inter-fondo.png");
+    background-repeat: no-repeat;
+    background-size: cover; /* This is the key property */
+    background-position: center; /* Centers the image */
+    height: 100vh;
+    width: 100%;
+    filter: blur(2px);
+}
+.name{
+    text-align: center;
+    color: #333;
+    font-size: 2em;
+}
+
+.formulario{
+    position: absolute;
+    top:50%; /* para centrar */
+    left:50%;  /* para centrar */
+    transform: translate(-50%, -50%); /* para centrar */
+    width: 400px;
+    height: 430px;
+    background-color: rgba(243, 242, 242, 0.87);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#Login{
+    margin: 0 auto;
+    margin-top: 80px;
+    background-color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 4.5rem;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.formulario h1{ /* Titulo - Colocando espacio arriba, abajo, izquierda y derecha*/
+    padding: 0 0 20px 0;
+    border-bottom: 2px solid rgb(104, 104, 105);
+    margin: 30px;
+}
+
+.formulario img{
+    width: 260px;
+    height: 120px;
+    position: relative;
+    display: block;
+    margin: auto;
+    padding-top: 45px;
+}
+
+.formulario form{ /* Modificando los input */
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+.username{ /* Agregando espacios entre los input */
+    position: relative;
+    border-bottom: 2px solid gray;
+    margin: 30px 0;
+}
+
+.username input{
+    width:100%;
+    padding: 0 5px;
+    height:40px;
+    font-size: 16px;
+    border:none;
+    background:none;
+    outline:none;
+}
+
+.username label{
+    position: absolute;
+    top:50%;
+    left:5px;
+    color: rgb(92, 92, 92);
+    transform:translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .3s;
+}
+
+
+.username span::before{  /*Para que la linea cambie de un color a otro cuando el usuario haga clic en el input */ 
+    content:'';
+    position: absolute;
+    top:40px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background:var(--primary-color);
+    transition: .5s ease;
+}
+
+.username input:focus ~ label, /* Para que las letras del input cambien de tamaño y color */
+.username input:valid ~ label{ /* la animacion de nombre no se va a superponer a lo que introduce el usuario */
+    top:-5px;
+    color: rgb(0, 0, 0);
+    font-size: small;
+}
+
+.username input:focus ~ span::before, /* Animacion de la barra de abajo (span) */
+.username input:focus ~ span::after{
+    width: 100%;
+}
+
+input[type="submit"]{
+    width:100%;
+    height:50px;
+    border:2px solid rgb(252, 185, 0);
+    border-radius: 25px;
+    font-size:18px;
+    font-weight: bold;
+    color:black;
+    cursor:pointer;
+    outline: none;
+    background-color:rgb(252, 185, 0);
+}
+
+input[type="submit"]:hover{
+    background: rgb(196, 144, 0); 
+    transition: .5s ease;
+    border: rgb(196, 144, 0); 
+    color: black;
+}
+
+.remember{
+    margin-top: 28px;
+}
+
+.remember a{
+    display: flex;
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(0, 52, 163);
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.remember a:hover{
+    transition: .5s ease;
+    color: black;
+}

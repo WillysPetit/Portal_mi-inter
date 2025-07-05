@@ -1,0 +1,117 @@
+import express from "express";
+import connection from "./db.js";
+import cors from "cors";
+
+const app = express();
+const PORT = 3001;
+
+app.use(cors());
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("¡Backend funcionando!");
+});
+
+app.get("/Cliente", (req, res) => {
+  connection.query("SELECT * FROM usuarios", (err, results) => {
+    if (err) {
+      res.status(500).json({ error: "Error en la consulta" });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+// Endpoint para registrar un nuevo cliente
+app.post("/registro-cliente", (req, res) => {
+  let { Correo, Nombre, Password, Apellido, Cedula, Usuario } = req.body;
+  if (!Correo || !Nombre || !Password || !Apellido || !Cedula || !Usuario) {
+    return res.status(400).json({ error: "Faltan datos obligatorios" });
+  }
+  // No convertir Cedula a número, mantener como string
+  // Validación de duplicados
+  const checkSql =
+    "SELECT * FROM cliente WHERE Correo = ? OR Usuario = ? OR Cedula = ?";
+  connection.query(checkSql, [Correo, Usuario, Cedula], (err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ error: "Error en la validación: " + err.message });
+    }
+    if (results.length > 0) {
+      return res.status(409).json({
+        error: "Ya existe un cliente con el mismo correo, usuario o cédula.",
+      });
+    }
+    // Si no hay duplicados, insertar
+    const sql =
+      "INSERT INTO cliente (Correo, Nombre, Password, Id_Reporte, Apellido, Cedula, Usuario) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    connection.query(
+      sql,
+      [Correo, Nombre, Password, 0, Apellido, Cedula, Usuario],
+      (err, result) => {
+        if (err) {
+          return res
+            .status(500)
+            .json({ error: "Error al registrar cliente: " + err.message });
+        }
+        res.json({ mensaje: "Cliente registrado exitosamente" });
+      }
+    );
+  });
+});
+
+// Endpoint para login de cliente
+app.post("/login-cliente", (req, res) => {
+  const { Correo, Password } = req.body;
+  if (!Correo || !Password) {
+    return res.status(400).json({ error: "Correo y contraseña requeridos" });
+  }
+  const sql = "SELECT * FROM cliente WHERE Correo = ? AND Password = ?";
+  connection.query(sql, [Correo, Password], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Error en la consulta" });
+    }
+    if (results.length === 0) {
+      return res.status(401).json({ error: "Credenciales incorrectas" });
+    }
+    res.json({ mensaje: "Login exitoso", cliente: results[0] });
+  });
+});
+
+// Endpoint para registrar un pago en la pasarela
+app.post("/pago-pasarela", (req, res) => {
+  const { Correo, Plan, Monto, Banco } = req.body;
+  if (!Correo || !Plan || !Monto || !Banco) {
+    return res.status(400).json({ error: "Faltan datos obligatorios" });
+  }
+  // Buscar el id_Clientes a partir del correo
+  const buscarCliente = "SELECT id_Clientes FROM cliente WHERE Correo = ?";
+  connection.query(buscarCliente, [Correo], (err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ error: "Error al buscar cliente: " + err.message });
+    }
+    if (results.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "No se encontró un cliente con ese correo." });
+    }
+    const id_Clientes = results[0].id_Clientes;
+    const sql =
+      "INSERT INTO pasarela (id_Clientes, Plan, Monto, Banco) VALUES (?, ?, ?, ?)";
+    connection.query(sql, [id_Clientes, Plan, Monto, Banco], (err, result) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ error: "Error al registrar pago: " + err.message });
+      }
+      res.json({ mensaje: "Pago registrado exitosamente" });
+    });
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Servidor backend escuchando en http://localhost:${PORT}`);
+});
