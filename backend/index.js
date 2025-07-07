@@ -86,7 +86,8 @@ app.post("/pago-pasarela", (req, res) => {
     return res.status(400).json({ error: "Faltan datos obligatorios" });
   }
   // Buscar el id_Clientes a partir del nombre o correo
-  const buscarCliente = "SELECT id_Clientes FROM cliente WHERE Correo = ? OR Nombre = ?";
+  const buscarCliente =
+    "SELECT id_Clientes FROM cliente WHERE Correo = ? OR Nombre = ?";
   connection.query(buscarCliente, [Correo, Nombre], (err, results) => {
     if (err) {
       return res
@@ -116,18 +117,88 @@ app.post("/pago-pasarela", (req, res) => {
 app.get("/cliente-plan", (req, res) => {
   const identifier = req.query.identifier;
   if (!identifier) {
-    return res.status(400).json({ error: "Falta el identificador (nombre o correo)" });
+    return res
+      .status(400)
+      .json({ error: "Falta el identificador (nombre o correo)" });
   }
   // Buscar por correo o nombre
-  const sql = "SELECT Plan, Monto FROM cliente WHERE Correo = ? OR Nombre = ? LIMIT 1";
+  const sql =
+    "SELECT Plan, Monto FROM cliente WHERE Correo = ? OR Nombre = ? LIMIT 1";
   connection.query(sql, [identifier, identifier], (err, results) => {
     if (err) {
-      return res.status(500).json({ error: "Error en la consulta: " + err.message });
+      return res
+        .status(500)
+        .json({ error: "Error en la consulta: " + err.message });
     }
     if (results.length === 0) {
-      return res.status(404).json({ error: "No se encontró un cliente con ese correo o nombre." });
+      return res
+        .status(404)
+        .json({ error: "No se encontró un cliente con ese correo o nombre." });
     }
     res.json({ plan: results[0].Plan, monto: results[0].Monto });
+  });
+});
+
+// Endpoint para registrar un nuevo administrador
+app.post("/registro-admin", (req, res) => {
+  const { Nombre, Apellido, Cedula, Correo, Usuario, Password, Rol } = req.body;
+  if (
+    !Nombre ||
+    !Apellido ||
+    !Cedula ||
+    !Correo ||
+    !Usuario ||
+    !Password ||
+    !Rol
+  ) {
+    return res.status(400).json({ error: "Faltan datos obligatorios" });
+  }
+
+  // Determinar la tabla según el rol
+  let tabla = "";
+  let mensaje = "";
+  if (Rol === "Administrador") {
+    tabla = "administradores";
+    mensaje = "Administrador registrado exitosamente";
+  } else if (Rol === "2" || Rol === "Supervisor") {
+    tabla = "supervisores";
+    mensaje = "Supervisor registrado exitosamente";
+  } else if (Rol === "3" || Rol === "Soporte") {
+    tabla = "soporte";
+    mensaje = "Soporte registrado exitosamente";
+  } else {
+    return res.status(400).json({ error: "Rol no válido" });
+  }
+
+  // Validación de duplicados en la tabla correspondiente
+  const checkSql = `SELECT * FROM ${tabla} WHERE Correo = ? OR Usuario = ? OR Cedula = ?`;
+  connection.query(checkSql, [Correo, Usuario, Cedula], (err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ error: "Error en la validación: " + err.message });
+    }
+    if (results.length > 0) {
+      return res
+        .status(409)
+        .json({
+          error: `Ya existe un registro con el mismo correo, usuario o cédula en ${tabla}.`,
+        });
+    }
+    // Si no hay duplicados, insertar
+    const sql = `INSERT INTO ${tabla} (Nombre, Apellido, Cedula, Correo, Usuario, Password, Rol) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    connection.query(
+      sql,
+      [Nombre, Apellido, Cedula, Correo, Usuario, Password, Rol],
+      (err, result) => {
+        if (err) {
+          return res
+            .status(500)
+            .json({ error: `Error al registrar en ${tabla}: ` + err.message });
+        }
+        res.json({ mensaje });
+      }
+    );
   });
 });
 

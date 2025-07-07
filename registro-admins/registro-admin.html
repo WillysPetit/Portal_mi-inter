@@ -1,63 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Formulario de registro - ADMIN</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="register-admin-style.css"> 
-</head>
-<body>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="register-admin-style.css" />
+  </head>
+  <body>
     <div class="recuperacion">
-        <h2 class="text-center mb-4">Formulario de Registro</h2>
-        <form>
-            <div class="form-row row">
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputName">Nombre</label>
-                    <input type="text" class="form-control" id="inputName" placeholder="Nombre" required>
-                </div>
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputLastName">Apellido</label>
-                    <input type="text" class="form-control" id="inputLastName" placeholder="Apellido" requiered>
-                </div>
-            </div>
-            <div class="form-group mb-3">
-                <label for="inputID">Cédula</label>
-                <div class="input-group"> <select class="form-select" id="idType" style="max-width: 80px;"> <option selected value="V">V</option>
-                        <option value="J">J</option>
-                        <option value="E">E</option>
-                    </select>
-                    <input type="text" class="form-control" id="inputID" placeholder="Cédula" required>
-                </div>
-            </div>
-            <div class="form-group mb-3">
-                <label for="inputEmail">Correo electrónico</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="ejemplo@mail.com" required>
-            </div>
-            <div class="form-row row">
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputName">Usuario</label>
-                    <input type="text" class="form-control" id="inputUser" placeholder="Usuario" required>
-                </div>
-                <div class="form-group col-md-6 mb-3">
-                    <label for="inputLastName">Contraseña</label>
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Contraseña" required>
-                </div>
-            </div>
-            <div class="form-floating">
-                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                  <option selected>Administrador</option>
-                  <option value="2">Supervisor</option>
-                  <option value="3">Soporte</option>
-                </select>
-                <label for="floatingSelect">Rol</label>
-              </div>
-            <button type="submit" class="btn btn-primary w-100">Registrarte</button>
-        </form>
+      <h2 class="text-center mb-4">Formulario de Registro</h2>
+      <form>
+        <div class="form-row row">
+          <div class="form-group col-md-6 mb-3">
+            <label for="inputName">Nombre</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputName"
+              placeholder="Nombre"
+              required
+            />
+          </div>
+          <div class="form-group col-md-6 mb-3">
+            <label for="inputLastName">Apellido</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputLastName"
+              placeholder="Apellido"
+              requiered
+            />
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label for="inputID">Cédula</label>
+          <div class="input-group">
+            <select class="form-select" id="idType" style="max-width: 80px">
+              <option selected value="V">V</option>
+              <option value="J">J</option>
+              <option value="E">E</option>
+            </select>
+            <input
+              type="text"
+              class="form-control"
+              id="inputID"
+              placeholder="Cédula"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label for="inputEmail">Correo electrónico</label>
+          <input
+            type="email"
+            class="form-control"
+            id="inputEmail"
+            placeholder="ejemplo@mail.com"
+            required
+          />
+        </div>
+        <div class="form-row row">
+          <div class="form-group col-md-6 mb-3">
+            <label for="inputName">Usuario</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputUser"
+              placeholder="Usuario"
+              required
+            />
+          </div>
+          <div class="form-group col-md-6 mb-3">
+            <label for="inputLastName">Contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              id="inputPassword"
+              placeholder="Contraseña"
+              required
+            />
+          </div>
+        </div>
+        <div class="form-floating">
+          <select
+            class="form-select"
+            id="floatingSelect"
+            aria-label="Floating label select example"
+          >
+            <option selected>Administrador</option>
+            <option value="2">Supervisor</option>
+            <option value="3">Soporte</option>
+          </select>
+          <label for="floatingSelect">Rol</label>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Registrarte</button>
+      </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      document
+        .querySelector("form")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const Nombre = document.getElementById("inputName").value.trim();
+          const Apellido = document
+            .getElementById("inputLastName")
+            .value.trim();
+          const Cedula =
+            document.getElementById("idType").value +
+            document.getElementById("inputID").value.trim();
+          const Correo = document.getElementById("inputEmail").value.trim();
+          const Usuario = document.getElementById("inputUser").value.trim();
+          const Password = document
+            .getElementById("inputPassword")
+            .value.trim();
+          const Rol = document.getElementById("floatingSelect").value;
+
+          if (
+            !Nombre ||
+            !Apellido ||
+            !Cedula ||
+            !Correo ||
+            !Usuario ||
+            !Password ||
+            !Rol
+          ) {
+            alert("Por favor, completa todos los campos.");
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              "http://localhost:3001/registro-admin",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  Nombre,
+                  Apellido,
+                  Cedula,
+                  Correo,
+                  Usuario,
+                  Password,
+                  Rol,
+                }),
+              }
+            );
+            const data = await response.json();
+            if (response.ok) {
+              alert("¡Administrador registrado exitosamente!");
+              // window.location.href = "..."; // Redirige si lo deseas
+            } else {
+              alert(data.error || "Error al registrar administrador");
+            }
+          } catch (err) {
+            alert("No se pudo conectar al servidor");
+          }
+        });
+    </script>
+  </body>
 </html>
