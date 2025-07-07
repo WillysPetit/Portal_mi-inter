@@ -85,9 +85,9 @@ app.post("/pago-pasarela", (req, res) => {
   if (!Correo || !Plan || !Monto || !Banco) {
     return res.status(400).json({ error: "Faltan datos obligatorios" });
   }
-  // Buscar el id_Clientes a partir del correo
-  const buscarCliente = "SELECT id_Clientes FROM cliente WHERE Correo = ?";
-  connection.query(buscarCliente, [Correo], (err, results) => {
+  // Buscar el id_Clientes a partir del nombre o correo
+  const buscarCliente = "SELECT id_Clientes FROM cliente WHERE Correo = ? OR Nombre = ?";
+  connection.query(buscarCliente, [Correo, Nombre], (err, results) => {
     if (err) {
       return res
         .status(500)
@@ -96,7 +96,7 @@ app.post("/pago-pasarela", (req, res) => {
     if (results.length === 0) {
       return res
         .status(404)
-        .json({ error: "No se encontró un cliente con ese correo." });
+        .json({ error: "No se encontró un cliente con ese correo o nombre." });
     }
     const id_Clientes = results[0].id_Clientes;
     const sql =
@@ -109,6 +109,25 @@ app.post("/pago-pasarela", (req, res) => {
       }
       res.json({ mensaje: "Pago registrado exitosamente" });
     });
+  });
+});
+
+// Endpoint para obtener plan y monto según nombre o correo
+app.get("/cliente-plan", (req, res) => {
+  const identifier = req.query.identifier;
+  if (!identifier) {
+    return res.status(400).json({ error: "Falta el identificador (nombre o correo)" });
+  }
+  // Buscar por correo o nombre
+  const sql = "SELECT Plan, Monto FROM cliente WHERE Correo = ? OR Nombre = ? LIMIT 1";
+  connection.query(sql, [identifier, identifier], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Error en la consulta: " + err.message });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: "No se encontró un cliente con ese correo o nombre." });
+    }
+    res.json({ plan: results[0].Plan, monto: results[0].Monto });
   });
 });
 

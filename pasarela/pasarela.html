@@ -21,8 +21,8 @@
 
       <form id="paymentForm" class="mx-auto" style="max-width: 400px">
         <div class="mb-3">
-          <label for="clientEmail" class="form-label">Correo del Cliente</label>
-          <input type="email" id="clientEmail" class="form-control" required />
+          <label for="userIdentifier" class="form-label">Usuario o Correo</label>
+          <input type="text" id="userIdentifier" class="form-control" required />
         </div>
         <div class="mb-3">
           <label for="plan" class="form-label">Plan</label>
@@ -84,30 +84,39 @@
       const planSelector = document.getElementById("planSelector");
 
       document
-        .getElementById("clientEmail")
-        .addEventListener("blur", function () {
-          const clientEmail = this.value.trim();
+        .getElementById("userIdentifier")
+        .addEventListener("blur", async function () {
+          const userIdentifier = this.value.trim();
           let plan = "";
           let amount = "";
 
-          // Aquí puedes hacer una consulta al backend para obtener el plan y monto según el correo
-          // Por ahora, lógica de ejemplo:
-          if (clientEmail === "cliente1@mail.com") {
-            plan = "Fibra 100 Mbps";
-            amount = 20;
-            planSelectorContainer.classList.add("d-none");
-          } else if (clientEmail === "cliente2@mail.com") {
-            plan = "TV Satelital";
-            amount = 15;
-            planSelectorContainer.classList.add("d-none");
-          } else if (clientEmail === "cliente3@mail.com") {
-            plan = "Triple Pack";
-            amount = 35;
-            planSelectorContainer.classList.add("d-none");
+          // Consulta al backend para obtener el plan y monto según nombre o correo
+          if (userIdentifier) {
+            try {
+              const response = await fetch(
+                `http://localhost:3001/cliente-plan?identifier=${encodeURIComponent(
+                  userIdentifier
+                )}`
+              );
+              const data = await response.json();
+              if (response.ok && data.plan && data.monto) {
+                plan = data.plan;
+                amount = data.monto;
+                planSelectorContainer.classList.add("d-none");
+              } else {
+                plan = "Plan no encontrado";
+                amount = "";
+                planSelectorContainer.classList.remove("d-none");
+              }
+            } catch (err) {
+              plan = "Plan no encontrado";
+              amount = "";
+              planSelectorContainer.classList.remove("d-none");
+            }
           } else {
-            plan = "Plan no encontrado";
+            plan = "";
             amount = "";
-            planSelectorContainer.classList.remove("d-none");
+            planSelectorContainer.classList.add("d-none");
           }
 
           planField.value = plan;
