@@ -21,8 +21,15 @@
 
       <form id="paymentForm" class="mx-auto" style="max-width: 400px">
         <div class="mb-3">
-          <label for="userIdentifier" class="form-label">Usuario o Correo</label>
-          <input type="text" id="userIdentifier" class="form-control" required />
+          <label for="userIdentifier" class="form-label"
+            >Correo Electrónico</label
+          >
+          <input
+            type="text"
+            id="userIdentifier"
+            class="form-control"
+            required
+          />
         </div>
         <div class="mb-3">
           <label for="plan" class="form-label">Plan</label>
@@ -140,13 +147,14 @@
         .addEventListener("submit", async function (e) {
           e.preventDefault();
 
-          const clientEmail = document.getElementById("clientEmail").value;
+          const userIdentifier =
+            document.getElementById("userIdentifier").value;
           const amount = document.getElementById("amount").value;
           const paymentMethod = document.getElementById("paymentMethod").value;
           const plan = document.getElementById("plan").value;
 
           if (
-            !clientEmail ||
+            !userIdentifier ||
             !amount ||
             !paymentMethod ||
             plan === "" ||
@@ -166,7 +174,7 @@
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                  Correo: clientEmail,
+                  Correo: userIdentifier,
                   Plan: plan,
                   Monto: amount,
                   Banco: paymentMethod,
@@ -201,7 +209,7 @@
           doc.setTextColor(0, 0, 0);
           doc.setFontSize(12);
           let y = 50;
-          doc.text(`Correo del Cliente: ${clientEmail}`, 20, y);
+          doc.text(`Usuario o Correo: ${userIdentifier}`, 20, y);
           y += 10;
           doc.text(`Plan: ${plan}`, 20, y);
           y += 10;
@@ -235,7 +243,7 @@
             "center"
           );
 
-          doc.save(`Comprobante_Pago_${clientEmail}.pdf`);
+          doc.save(`Comprobante_Pago_${userIdentifier}.pdf`);
         });
     </script>
   </body>
