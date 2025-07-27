@@ -81,7 +81,7 @@ app.post("/login-cliente", (req, res) => {
 
 // Endpoint para registrar un pago en la pasarela
 app.post("/pago-pasarela", (req, res) => {
-  const { Correo, Plan, Monto, Banco } = req.body;
+  const { Correo, Nombre, Plan, Monto, Banco } = req.body;
   if (!Correo || !Plan || !Monto || !Banco) {
     return res.status(400).json({ error: "Faltan datos obligatorios" });
   }
@@ -113,27 +113,20 @@ app.post("/pago-pasarela", (req, res) => {
   });
 });
 
-// Endpoint para obtener plan y monto según nombre o correo
+// Endpoint para obtener plan y monto según nombre o correo (insensible a mayúsculas y espacios)
 app.get("/cliente-plan", (req, res) => {
   const identifier = req.query.identifier;
   if (!identifier) {
-    return res
-      .status(400)
-      .json({ error: "Falta el identificador (nombre o correo)" });
+    return res.status(400).json({ error: "Falta el identificador (nombre o correo)" });
   }
-  // Buscar por correo o nombre
-  const sql =
-    "SELECT Plan, Monto FROM cliente WHERE Correo = ? OR Nombre = ? LIMIT 1";
-  connection.query(sql, [identifier, identifier], (err, results) => {
+  const cleanIdentifier = identifier.trim().toLowerCase();
+  const sql = `SELECT Plan, Monto FROM cliente WHERE LOWER(TRIM(Correo)) = ? OR LOWER(TRIM(Nombre)) = ? LIMIT 1`;
+  connection.query(sql, [cleanIdentifier, cleanIdentifier], (err, results) => {
     if (err) {
-      return res
-        .status(500)
-        .json({ error: "Error en la consulta: " + err.message });
+      return res.status(500).json({ error: "Error en la consulta: " + err.message });
     }
     if (results.length === 0) {
-      return res
-        .status(404)
-        .json({ error: "No se encontró un cliente con ese correo o nombre." });
+      return res.status(404).json({ error: "No se encontró un cliente con ese correo o nombre." });
     }
     res.json({ plan: results[0].Plan, monto: results[0].Monto });
   });

@@ -57,6 +57,8 @@
             );
             const data = await response.json();
             if (response.ok) {
+              // Guardar el nombre del usuario en localStorage
+              localStorage.setItem("nombreUsuario", data.cliente.Nombre);
               alert("¡Login exitoso!");
               window.location.href = "../home-page/home-page.html";
               // Redirigir o guardar datos según tu lógica
