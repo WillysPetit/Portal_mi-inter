@@ -72,9 +72,7 @@
       </div>
 
       <div class="text-center mt-4">
-        <a href="/home-page/index.html" class="btn btn-secondary"
-          >Volver al Inicio</a
-        >
+        <a href="../index.html" class="btn btn-secondary">Volver al inicio</a>
       </div>
     </div>
 
@@ -101,7 +99,7 @@
           if (userIdentifier) {
             try {
               const response = await fetch(
-                `http://localhost:3001/cliente-plan?identifier=${encodeURIComponent(
+                `https://portal-mi-inter.onrender.com/cliente-plan?identifier=${encodeURIComponent(
                   userIdentifier
                 )}`
               );
@@ -169,7 +167,7 @@
           // Enviar datos al backend para guardar en la tabla pasarela
           try {
             const response = await fetch(
-              "http://localhost:3001/pago-pasarela",
+              "https://portal-mi-inter.onrender.com/pago-pasarela",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
